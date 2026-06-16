@@ -1,5 +1,7 @@
 package com.ui.test;
 import static com.constants.Browser.*;
+
+import com.dataProvider.LoginDataProvider;
 import com.ui.pages.HomePage;
 import static org.testng.Assert.*;
 import org.testng.annotations.BeforeMethod;
@@ -15,7 +17,8 @@ public class LoginTest2 {
             homePage = new HomePage(CHROME);
         }
 
-        @Test(description="verify valid user login" , groups ={"sanity","e2e"} )
+        @Test(description="verify valid user login" , groups ={"sanity","e2e"}, dataProvider= "LoginTestCSVDataProvider", dataProviderClass = LoginDataProvider.class,
+                retryAnalyzer = com.listeners.MyRetryAnalyzer.class)
         public void homePageTest()
         {
             String userName = homePage.goToLoginInPage().doLogin("daniel.maxwell@comcast.net", "password").findUsername();
