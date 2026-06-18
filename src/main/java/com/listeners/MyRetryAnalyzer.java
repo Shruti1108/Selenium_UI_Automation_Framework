@@ -1,13 +1,8 @@
 package com.listeners;
-import com.constants.Environment;
 import com.utility.propertiesUtil;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
-
-import java.util.Properties;
-
 import static com.constants.Environment.QA;
-import static java.sql.Types.INTEGER;
 
 public class MyRetryAnalyzer implements IRetryAnalyzer{
 

@@ -38,6 +38,7 @@ public class LoginDataProvider {
 
     @DataProvider(name = "LoginTestExcelDataProvider")
     public Iterator<UserData> loginExcelDataProvider() {
+
         return ExcelReaderUtility.readExcelData("LoginData.xlsx");
     }
 }

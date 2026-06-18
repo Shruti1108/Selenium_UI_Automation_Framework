@@ -9,9 +9,9 @@ import org.openqa.selenium.By;
 public final class HomePage extends BrowserUtility {
 
     private final static By SignIn = By.className("login");;
-    public HomePage(Browser driver)
+    public HomePage(Browser browserName,boolean isHeadless)
     {
-        super(driver); //calling parent class(abstarct Browserutility) costructor form child class
+        super(browserName,isHeadless); //calling parent class(abstarct Browserutility) costructor form child class
         goToWebsite(propertiesUtil.readProperties(QA,"URL"));
     }
 

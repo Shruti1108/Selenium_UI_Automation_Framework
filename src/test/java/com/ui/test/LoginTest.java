@@ -22,7 +22,7 @@ public class LoginTest {
         WebDriver driver = new ChromeDriver(option); //real browser(object) session is created. With looses coupling
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
-        HomePage homePage = new HomePage(CHROME);
+        HomePage homePage = new HomePage(CHROME,false);
         homePage.goToLoginInPage();
 
 

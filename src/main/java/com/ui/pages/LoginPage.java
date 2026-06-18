@@ -10,9 +10,9 @@ public class LoginPage extends BrowserUtility {
     private final static By PASSWORD = By.id("passwd");
     private final static By SUBMIT_LOGIN = By.id("SubmitLogin");
 
-    public LoginPage(WebDriver browser) {
+    public LoginPage(WebDriver driver) {
 
-        super(browser);
+        super(driver);
     }
 
     public MyAccountPage doLogin(String email, String password)

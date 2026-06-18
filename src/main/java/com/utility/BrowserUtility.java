@@ -5,81 +5,70 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public abstract class BrowserUtility {
 
-    private WebDriver driver;
-    private WebDriverWait wait=null;
+    private static WebDriver driver;
+    //private WebDriverWait wait=null;
 
-    public WebDriver getDriver() { //use to pass the driver session from one class or page to another
-        return driver;
+    public static WebDriver getDriver() { //use to pass the driver session from one class or page to another
+        return DriverManager.getDriver();
     }
 
-    public BrowserUtility(WebDriver driver)
-    {
+    public BrowserUtility(WebDriver driver) {
         super(); // call parent class constructor from child class
-        this.driver = driver; //initialize instance variable driver
-    }
-    public BrowserUtility(String browser)
-    {
-        if(browser.equalsIgnoreCase("chrome"))
-        {
-            driver = new ChromeDriver();
-        }
-        else if(browser.equalsIgnoreCase("firefox"))
-        {
-            driver = new FirefoxDriver();
-        }
-        else
-        {
-            System.out.println("Browser Not Found");
-        }
+        this.driver = DriverManager.getDriver(); //initialize instance variable driver
     }
 
-    public BrowserUtility(Browser browserName)
-    {
-        if(browserName==Browser.CHROME)
-        {
-            driver = new ChromeDriver();
+    public BrowserUtility(Browser browserName, boolean isHeadless) {
+        if (browserName == Browser.CHROME) {
+            if (isHeadless) {
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--headless");}
+            else
+                driver = new ChromeDriver();
+
+            } else if (browserName == Browser.FIREFOX) {
+
+            if (isHeadless) {
+                EdgeOptions edgeOptions = new EdgeOptions();
+                edgeOptions.addArguments("--headless=old");
+                edgeOptions.addArguments("disable-gpu");}
+            else
+                driver = new FirefoxDriver();
+            } else {
+                System.out.println("Browser Not Found");
+            }
         }
-        else if(browserName==Browser.FIREFOX)
+
+
+        public void goToWebsite (String url)
         {
-            driver = new FirefoxDriver();
+            driver.get(url);
         }
-        else
+        public void clickOn (By locator)
         {
-            System.out.println("Browser Not Found");
+            WebElement element = DriverManager.getDriver().findElement(locator);
+            element.click();
+        }
+
+        public void enterText (By locator, String text)
+        {
+            WebElement element = DriverManager.getDriver().findElement(locator);
+            element.sendKeys(text);
+        }
+
+        public String getVisibleText (By locator)
+        {
+
+            WebElement element = DriverManager.getDriver().findElement(locator);
+            return element.getText();
         }
     }
-
-
-    public void goToWebsite(String url)
-    {
-        driver.get(url);
-    }
-    public void clickOn(By locator)
-    {
-        WebElement element = driver.findElement(locator);
-        element.click();
-    }
-
-        public void enterText(By locator, String text)
-    {
-        WebElement element = driver.findElement(locator);
-        element.sendKeys(text);
-    }
-
-    public String getVisibleText(By locator)
-    {
-
-        WebElement element = driver.findElement(locator);
-        return element.getText();
-    }
-}
-//will just pass the driver during ojecct  via constructor  creation here to call the methods of this class
+//will just pass the driver during object creation via constructor  creation here to call the methods of this class
 //object must be created in multiple ways
 
 //findElement() accepts By as an argument and return WebElement
